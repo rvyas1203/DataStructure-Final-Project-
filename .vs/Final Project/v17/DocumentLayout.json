@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\vyasr\\OneDrive\\Desktop\\Data Structure\\DataStructure-Final-Project-\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F91DE503-75B4-4839-9671-B6E78416CA82}|Final Project.vcxproj|C:\\Users\\vyasr\\OneDrive\\Desktop\\Data Structure\\DataStructure-Final-Project-\\project.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F91DE503-75B4-4839-9671-B6E78416CA82}|Final Project.vcxproj|solutionrelative:project.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "project.cpp",
+              "DocumentMoniker": "C:\\Users\\vyasr\\OneDrive\\Desktop\\Data Structure\\DataStructure-Final-Project-\\project.cpp",
+              "RelativeDocumentMoniker": "project.cpp",
+              "ToolTip": "C:\\Users\\vyasr\\OneDrive\\Desktop\\Data Structure\\DataStructure-Final-Project-\\project.cpp",
+              "RelativeToolTip": "project.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-08-12T20:27:11.381Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
