@@ -95,3 +95,76 @@ Parcel* createParcel(const char* destination, int weight, float valuation) {
 
     return newParcel;  // Return the created Parcel node
 }
+
+// Insert parcel into BST
+/*
+ * Function: insert
+ * ----------------------------
+ *   Inserts a parcel into a binary search tree (BST) based on its weight.
+ *
+ *   root: The root of the BST.
+ *   destination: The destination country of the parcel.
+ *   weight: The weight of the parcel.
+ *   valuation: The monetary valuation of the parcel.
+ *
+ *   returns: The root of the BST after insertion.
+ */
+Parcel* insert(Parcel* root, const char* destination, int weight, float valuation) {
+    // Base case: If the tree is empty, create a new Parcel node
+    if (root == NULL) return createParcel(destination, weight, valuation);
+
+    // Recursively insert the parcel in the left or right subtree based on weight
+    if (weight < root->weight)
+        root->left = insert(root->left, destination, weight, valuation);
+    else
+        root->right = insert(root->right, destination, weight, valuation);
+
+    return root;  // Return the root of the tree after insertion
+}
+
+
+// Print all parcels in BST using in-order traversal
+/*
+ * Function: printAllParcels
+ * ----------------------------
+ *   Recursively prints all parcels in a binary search tree (BST) in ascending order of weight.
+ *
+ *   root: The root of the BST.
+ */
+void printAllParcels(Parcel* root) {
+    if (root != NULL) {
+        // Traverse the left subtree
+        printAllParcels(root->left);
+
+        // Print the current parcel
+        printf("Destination: %s, Weight: %d, Valuation: %.2f\n", root->destination, root->weight, root->valuation);
+
+        // Traverse the right subtree
+        printAllParcels(root->right);
+    }
+}
+
+
+// Traverse the tree to calculate total weight and valuation
+/*
+ * Function: traverseAndCalculate
+ * ----------------------------
+ *   Recursively traverses a binary search tree (BST) to calculate the total weight and valuation of parcels.
+ *
+ *   root: The root of the BST.
+ *   totalWeight: Pointer to the total weight accumulator.
+ *   totalValuation: Pointer to the total valuation accumulator.
+ */
+void traverseAndCalculate(Parcel* root, int* totalWeight, float* totalValuation) {
+    if (root != NULL) {
+        // Traverse the left subtree and update accumulators
+        traverseAndCalculate(root->left, totalWeight, totalValuation);
+
+        // Accumulate weight and valuation of the current parcel
+        *totalWeight += root->weight;
+        *totalValuation += root->valuation;
+
+        // Traverse the right subtree and update accumulators
+        traverseAndCalculate(root->right, totalWeight, totalValuation);
+    }
+}
