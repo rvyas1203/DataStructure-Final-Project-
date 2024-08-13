@@ -426,3 +426,111 @@ void freeHashTable(HashTable table[]) {
         freeParcels(table[i].root);
     }
 }
+
+int main() {
+    HashTable table[TABLE_SIZE];
+    FILE* file;
+    char destination[21];
+    int weight;
+    float valuation;
+    int choice;
+    int result;
+
+    initHashTable(table);
+
+    // Load data from file
+    if (fopen_s(&file, "couriers.txt", "r") != 0) {
+        printf("Error opening file.\n");
+        return 1;
+    }
+
+    while (fscanf_s(file, "%20[^,],%d,%f\n", destination, (unsigned)_countof(destination), &weight, &valuation) == 3) {
+        insertIntoHashTable(table, destination, weight, valuation);
+    }
+
+    fclose(file);
+
+    while (1) {
+        printf("\nMenu:\n");
+        printf("1. Display all parcels for a country\n");
+        printf("2. Display parcels for a country with weight higher/lower\n");
+        printf("3. Display total weight and valuation for a country\n");
+        printf("4. Display cheapest and most expensive parcel for a country\n");
+        printf("5. Display lightest and heaviest parcel for a country\n");
+        printf("6. Exit\n");
+        printf("Enter your choice: ");
+
+        if (scanf_s("%d", &choice) != 1) {
+            printf("Invalid input. Please enter a number.\n");
+            while (getchar() != '\n'); // Clear the input buffer
+            continue;
+        }
+
+        switch (choice) {
+        case 1:
+            printf("Enter country name: ");
+            if (scanf_s("%20s", destination, (unsigned)_countof(destination)) != 1) {
+                printf("Invalid input.\n");
+                while (getchar() != '\n'); // Clear the input buffer
+                break;
+            }
+            searchByCountry(table, destination);
+            break;
+        case 2:
+            printf("Enter country name: ");
+            if (scanf_s("%20s", destination, (unsigned)_countof(destination)) != 1) {
+                printf("Invalid input.\n");
+                while (getchar() != '\n'); // Clear the input buffer
+                break;
+            }
+            printf("Enter weight: ");
+            if (scanf_s("%d", &weight) != 1) {
+                printf("Invalid input.\n");
+                while (getchar() != '\n'); // Clear the input buffer
+                break;
+            }
+            printf("1. Higher\n2. Lower\n");
+            if (scanf_s("%d", &choice) != 1) {
+                printf("Invalid input.\n");
+                while (getchar() != '\n'); // Clear the input buffer
+                break;
+            }
+            searchByCountryAndWeight(table, destination, weight, choice == 1);
+            break;
+        case 3:
+            printf("Enter country name: ");
+            if (scanf_s("%20s", destination, (unsigned)_countof(destination)) != 1) {
+                printf("Invalid input.\n");
+                while (getchar() != '\n'); // Clear the input buffer
+                break;
+            }
+            calculateTotal(table, destination);
+            break;
+        case 4:
+            printf("Enter country name: ");
+            if (scanf_s("%20s", destination, (unsigned)_countof(destination)) != 1) {
+                printf("Invalid input.\n");
+                while (getchar() != '\n'); // Clear the input buffer
+                break;
+            }
+            findCheapestAndMostExpensive(table, destination);
+            break;
+        case 5:
+            printf("Enter country name: ");
+            if (scanf_s("%20s", destination, (unsigned)_countof(destination)) != 1) {
+                printf("Invalid input.\n");
+                while (getchar() != '\n'); // Clear the input buffer
+                break;
+            }
+            findLightestAndHeaviest(table, destination);
+            break;
+        case 6:
+            printf("Exiting...\n");
+            freeHashTable(table);
+            return 0;
+        default:
+            printf("Invalid choice. Please enter a number between 1 and 6.\n");
+            break;
+        }
+    }
+}
