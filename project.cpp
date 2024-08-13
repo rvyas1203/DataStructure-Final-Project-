@@ -45,3 +45,53 @@ void searchByCountryAndWeight(HashTable table[], const char* country, int weight
 void calculateTotal(HashTable table[], const char* country);
 void findCheapestAndMostExpensive(HashTable table[], const char* country);
 void findLightestAndHeaviest(HashTable table[], const char* country);
+
+// Hash function (djb2)
+/*
+ * Function: hash
+ * ----------------------------
+ *   Computes the hash value of a given string.
+ *
+ *   str: The input string to be hashed.
+ *
+ *   returns: The computed hash value as an unsigned long, modulo TABLE_SIZE.
+ */
+
+unsigned long hash(unsigned char* str) {
+    unsigned long hash = 5381;
+    int c;
+
+    while ((c = *str++)) {
+        hash = ((hash << 5) + hash) + c;
+    }
+
+    return hash % TABLE_SIZE;
+}
+
+// Create a new parcel node
+/*
+ * Function: createParcel
+ * ----------------------------
+ *   Dynamically allocates and initializes a new parcel node.
+ *
+ *   destination: The destination country of the parcel.
+ *   weight: The weight of the parcel.
+ *   valuation: The monetary valuation of the parcel.
+ *
+ *   returns: A pointer to the newly created Parcel struct.
+ */
+
+Parcel* createParcel(const char* destination, int weight, float valuation) {
+    // Allocate memory for a new Parcel struct
+    Parcel* newParcel = (Parcel*)malloc(sizeof(Parcel));
+
+    // Duplicate the destination string to store in the Parcel
+    newParcel->destination = _strdup(destination);
+
+    // Initialize the Parcel fields
+    newParcel->weight = weight;
+    newParcel->valuation = valuation;
+    newParcel->left = newParcel->right = NULL;  // Initialize child pointers
+
+    return newParcel;  // Return the created Parcel node
+}
