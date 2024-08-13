@@ -327,3 +327,78 @@ void findLightestAndHeaviest(HashTable table[], const char* country) {
     }
 }
 
+// Insert a parcel into the hash table
+/*
+ * Function: insertIntoHashTable
+ * ----------------------------
+ *   Inserts a parcel into the hash table. The parcel is inserted into a BST
+ *   at the index corresponding to its hashed destination.
+ *
+ *   table: The hash table to insert into.
+ *   destination: The destination country of the parcel.
+ *   weight: The weight of the parcel.
+ *   valuation: The monetary valuation of the parcel.
+ */
+void insertIntoHashTable(HashTable table[], const char* destination, int weight, float valuation) {
+    unsigned long index = hash((unsigned char*)destination);  // Get the hash index for the destination
+    table[index].root = insert(table[index].root, destination, weight, valuation);  // Insert into the BST
+}
+
+
+// Search and print all parcels by country
+/*
+ * Function: searchByCountry
+ * ----------------------------
+ *   Searches and prints all parcels for a given country.
+ *
+ *   table: The hash table containing parcel data.
+ *   country: The country name to search for.
+ */
+void searchByCountry(HashTable table[], const char* country) {
+    unsigned long index = hash((unsigned char*)country);  // Get the hash index for the country
+    Parcel* root = table[index].root;  // Get the root of the BST for the country
+
+    // Check if there are parcels for the given country
+    if (root == NULL) {
+        printf("No parcels found for this country.\n");
+    }
+    else {
+        printAllParcels(root);  // Print all parcels in the BST
+    }
+}
+
+
+
+// Search and print parcels by country and weight criteria
+/*
+ * Function: searchByCountryAndWeight
+ * ----------------------------
+ *   Searches and prints parcels for a given country that match a weight criterion.
+ *   The criterion can be to find parcels heavier or lighter than a specified weight.
+ *
+ *   table: The hash table containing parcel data.
+ *   country: The country name to search for.
+ *   weight: The weight criterion to search by.
+ *   higher: A flag indicating the search type (1 for heavier, 0 for lighter).
+ */
+void searchByCountryAndWeight(HashTable table[], const char* country, int weight, int higher) {
+    unsigned long index = hash((unsigned char*)country);  // Get the hash index for the country
+    Parcel* root = table[index].root;  // Get the root of the BST for the country
+
+    // Check if there are parcels for the given country
+    if (root == NULL) {
+        printf("No parcels found for this country.\n");
+        return;
+    }
+
+    // Traverse the BST and print parcels that match the weight criterion
+    if (higher) {
+        printf("Parcels heavier than %d:\n", weight);
+    }
+    else {
+        printf("Parcels lighter than %d:\n", weight);
+    }
+
+    printAllParcels(root);
+}
+
