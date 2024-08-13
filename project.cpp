@@ -261,3 +261,69 @@ void findCheapestAndMostExpensive(HashTable table[], const char* country) {
         printf("No parcels found for this country.\n");
     }
 }
+
+// Traverse the tree to find lightest and heaviest parcels
+/*
+ * Function: traverseAndFindLightestAndHeaviest
+ * ----------------------------
+ *   Recursively traverses a binary search tree (BST) to find the lightest and heaviest parcels.
+ *
+ *   root: The root of the BST.
+ *   lightest: Pointer to the parcel with the lowest weight.
+ *   heaviest: Pointer to the parcel with the highest weight.
+ */
+void traverseAndFindLightestAndHeaviest(Parcel* root, Parcel** lightest, Parcel** heaviest) {
+    if (root != NULL) {
+        // Traverse the left subtree
+        traverseAndFindLightestAndHeaviest(root->left, lightest, heaviest);
+
+        // Update the lightest and heaviest parcels if necessary
+        if (*lightest == NULL || root->weight < (*lightest)->weight) {
+            *lightest = root;
+        }
+        if (*heaviest == NULL || root->weight > (*heaviest)->weight) {
+            *heaviest = root;
+        }
+
+        // Traverse the right subtree
+        traverseAndFindLightestAndHeaviest(root->right, lightest, heaviest);
+    }
+}
+
+
+// Find the lightest and heaviest parcels for a country
+/*
+ * Function: findLightestAndHeaviest
+ * ----------------------------
+ *   Finds and displays the lightest and heaviest parcels for a given country.
+ *
+ *   table: The hash table containing parcel data.
+ *   country: The country name for which to find the parcels.
+ */
+void findLightestAndHeaviest(HashTable table[], const char* country) {
+    unsigned long index = hash((unsigned char*)country);  // Get the hash index for the country
+    Parcel* root = table[index].root;  // Get the root of the BST for the country
+
+    // Check if there are parcels for the given country
+    if (root == NULL) {
+        printf("No parcels found for this country.\n");
+        return;
+    }
+
+    Parcel* lightest = NULL;  // Initialize pointer for the lightest parcel
+    Parcel* heaviest = NULL;  // Initialize pointer for the heaviest parcel
+
+    // Traverse the BST to find the lightest and heaviest parcels
+    traverseAndFindLightestAndHeaviest(root, &lightest, &heaviest);
+
+    // Display the results
+    if (lightest != NULL) {
+        printf("Lightest Parcel: Destination: %s, Weight: %d, Valuation: %.2f\n",
+            lightest->destination, lightest->weight, lightest->valuation);
+    }
+    if (heaviest != NULL) {
+        printf("Heaviest Parcel: Destination: %s, Weight: %d, Valuation: %.2f\n",
+            heaviest->destination, heaviest->weight, heaviest->valuation);
+    }
+}
+
