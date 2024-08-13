@@ -1,0 +1,4 @@
+﻿  project.cpp
+C:\Users\vyasr\OneDrive\Desktop\Data Structure\DataStructure-Final-Project-\project.cpp(437,9): warning C4101: 'result': unreferenced local variable
+project.obj : error LNK2019: unresolved external symbol "void __cdecl initHashTable(struct HashTable * const)" (?initHashTable@@YAXQEAUHashTable@@@Z) referenced in function main
+C:\Users\vyasr\OneDrive\Desktop\Data Structure\DataStructure-Final-Project-\x64\Debug\Final Project.exe : fatal error LNK1120: 1 unresolved externals
