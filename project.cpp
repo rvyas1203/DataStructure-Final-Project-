@@ -402,3 +402,27 @@ void searchByCountryAndWeight(HashTable table[], const char* country, int weight
     printAllParcels(root);
 }
 
+// Free memory used by the BST
+/*
+ * Function: freeParcels
+ * ----------------------------
+ *   Frees the memory allocated for the parcels in a binary search tree (BST).
+ *
+ *   root: The root of the BST to free.
+ */
+void freeParcels(Parcel* root) {
+    if (root != NULL) {
+        freeParcels(root->left);   // Recursively free left subtree
+        freeParcels(root->right);  // Recursively free right subtree
+        free(root->destination);   // Free the destination string
+        free(root);  // Free the parcel node
+    }
+}
+
+
+// Free all allocated memory for the hash table
+void freeHashTable(HashTable table[]) {
+    for (int i = 0; i < TABLE_SIZE; i++) {
+        freeParcels(table[i].root);
+    }
+}
